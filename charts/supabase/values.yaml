@@ -70,6 +70,8 @@ secret:
     secretRefKey:
       username: username
       password: password
+    ipRestriction: []
+    hosts: []
   # S3 credentials for storage object bucket
   s3:
     # keyId: ""
