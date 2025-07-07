@@ -224,10 +224,10 @@ data:
             paths:
               - /
     {{- if and .Values.secret.dashboard.hosts (not (empty .Values.secret.dashboard.hosts)) }}
-        hosts:
-          {{- range .Values.secret.dashboard.hosts }}
-            - {{ . | quote }}
-          {{- end }}
+            hosts:
+            {{- range .Values.secret.dashboard.hosts }}
+              - {{ . | quote }}
+            {{- end }}
     {{- end }}
     {{- if .Values.secret.dashboard }}
         plugins:
@@ -236,13 +236,12 @@ data:
             config:
               hide_credentials: true
     {{- if and .Values.secret.dashboard.ipRestriction (not (empty .Values.secret.dashboard.ipRestriction)) }}
-            plugins:
-              - name: ip-restriction
-                config:
-                  allow:
-                  {{- range .Values.secret.dashboard.ipRestriction }}
-                    - {{ . | quote }}
-                  {{- end }}
+          - name: ip-restriction
+            config:
+              allow:
+              {{- range .Values.secret.dashboard.ipRestriction }}
+                - {{ . | quote }}
+              {{- end }}
     {{- end }}
     {{- end }}
 {{- end }}
