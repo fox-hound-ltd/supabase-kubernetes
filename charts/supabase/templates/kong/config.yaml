@@ -142,6 +142,25 @@ data:
                 - anon
     {{- end }}
     {{- if .Values.realtime.enabled }}
+      - name: realtime-broadcast-v1
+        _comment: "Realtime: /realtime/v1/api/broadcast -> ws://{{ include "supabase.realtime.fullname" . }}:{{ .Values.realtime.service.port }}/api/broadcast"
+        url: http://{{ include "supabase.realtime.fullname" . }}:{{ .Values.realtime.service.port }}/api/broadcast
+        routes:
+          - name: realtime-broadcast-v1-all
+            strip_path: true
+            paths:
+              - /realtime/v1/api/broadcast
+        plugins:
+          - name: cors
+          - name: key-auth
+            config:
+              hide_credentials: false
+          - name: acl
+            config:
+              hide_groups_header: true
+              allow:
+                - admin
+                - anon
       - name: realtime-v1
         _comment: "Realtime: /realtime/v1/* -> ws://{{ include "supabase.realtime.fullname" . }}:{{ .Values.realtime.service.port }}/socket/*"
         url: http://{{ include "supabase.realtime.fullname" . }}:{{ .Values.realtime.service.port }}/socket
