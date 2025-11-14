@@ -190,6 +190,17 @@ data:
             strip_path: true
             paths:
               - /storage/v1/
+            {{- if and .Values.secret.dashboard.hosts (not (empty .Values.secret.dashboard.hosts)) }}
+            hosts:
+              - {{ include "supabase.kong.fullname" . | quote }}
+              {{- range .Values.kong.ingress.hosts }}
+                {{- if .host }}
+              - {{ .host | quote }}
+                {{- else }}
+              - {{ . | quote }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
         plugins:
           - name: cors
     {{- end }}
